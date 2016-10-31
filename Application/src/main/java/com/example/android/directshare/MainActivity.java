@@ -72,7 +72,7 @@ public class MainActivity extends Activity {
     public void SendSMS(View v) {
         Intent i = new Intent();
         i.setAction("com.example.android.directshare.SEND_SMS");
-        String phoneNumber = "9492476107";
+        String phoneNumber = ((EditText) findViewById(R.id.phoneNumber)).getText().toString();
         String msg = "testing message";
         i.putExtra("PHONE_NUMBER", phoneNumber);
         i.putExtra("TEXT_MSG", msg);
