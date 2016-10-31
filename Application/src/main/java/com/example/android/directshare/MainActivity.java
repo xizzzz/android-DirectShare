@@ -16,9 +16,14 @@
 
 package com.example.android.directshare;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toolbar;
@@ -31,13 +36,26 @@ public class MainActivity extends Activity {
 
     private EditText mEditBody;
 
+    final static int MY_PERMISSIONS_REQUEST_SEND_SMS = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        setActionBar((Toolbar) findViewById(R.id.toolbar));
+      //  setActionBar((Toolbar) findViewById(R.id.toolbar));
         mEditBody = (EditText) findViewById(R.id.body);
         findViewById(R.id.share).setOnClickListener(mOnClickListener);
+
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.SEND_SMS)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.SEND_SMS},
+                    MY_PERMISSIONS_REQUEST_SEND_SMS);
+
+            // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+            // app-defined int constant. The callback method gets the
+            // result of the request.
+        }
     }
 
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {
@@ -51,6 +69,40 @@ public class MainActivity extends Activity {
         }
     };
 
+    public void SendSMS(View v) {
+        Intent i = new Intent();
+        i.setAction("com.example.android.directshare.SEND_SMS");
+        String phoneNumber = "9492476107";
+        String msg = "testing message";
+        i.putExtra("PHONE_NUMBER", phoneNumber);
+        i.putExtra("TEXT_MSG", msg);
+        i.setPackage(this.getPackageName());
+        Log.d("send", "send sms");
+        startService(i);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_SEND_SMS: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    Log.d("send", "Permission granted");
+
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+        }
+    }
+
+
     /**
      * Emits a sample share {@link Intent}.
      */
@@ -60,5 +112,7 @@ public class MainActivity extends Activity {
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, mEditBody.getText().toString());
         startActivity(Intent.createChooser(sharingIntent, getString(R.string.send_intent_title)));
     }
+
+
 
 }

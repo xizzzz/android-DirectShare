@@ -18,16 +18,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?android:attr/colorPrimary"
-        android:elevation="4dp"
-        android:minHeight="?android:attr/actionBarSize"
-        android:popupTheme="@android:style/ThemeOverlay.Material.Light"
-        android:theme="@android:style/ThemeOverlay.Material.Dark.ActionBar" />
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -58,5 +48,12 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:text="@string/share" />
+
+    <Button
+        android:text="Send SMS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button2"
+        android:onClick="SendSMS" />
 
 </LinearLayout>
