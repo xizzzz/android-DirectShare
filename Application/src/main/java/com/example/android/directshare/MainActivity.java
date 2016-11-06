@@ -113,6 +113,12 @@ public class MainActivity extends Activity {
         startActivity(Intent.createChooser(sharingIntent, getString(R.string.send_intent_title)));
     }
 
-
+    public void startAlarm(View v) {
+        long alarmid = 1;
+        Intent i = new Intent("com.xi.TRIGGER_ALARM");
+        i.putExtra("alarm_id", alarmid);
+        Log.d("alarm", "send alarm");
+        sendBroadcast(i);
+    }
 
 }

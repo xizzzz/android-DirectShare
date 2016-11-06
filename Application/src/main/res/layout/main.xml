@@ -66,4 +66,11 @@
         android:id="@+id/button2"
         android:onClick="SendSMS" />
 
+    <Button
+        android:text="Trigger Alarm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/alarm"
+        android:onClick="startAlarm" />
+
 </LinearLayout>
